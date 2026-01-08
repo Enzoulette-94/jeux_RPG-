@@ -1,23 +1,29 @@
 # Battle en Royal des Srabs
 
-A small browser-based RPG battle game where 5 characters fight in a gladiator-style arena. You control one character; the rest are controlled by the computer.
+A small browser-based RPG battle game where 2 to 5 characters fight in a gladiator-style arena. You can build the whole party and play either a single character or all of them, depending on the mode.
 
 ## Features
 - 7 playable classes with unique stats and special attacks.
+- Party builder: add/remove characters before the game.
 - 10-round battles or until only one survivor remains.
 - Normal attacks can fail (1 chance out of 4).
 - Special attacks consume mana.
-- Two game modes: discovery (easy) and warrior (hard).
+- Three game modes: discovery (easy), warrior (hard), and god (full control).
 
 ## Game Modes
 - **Discovery (easy):** shows the status panel each round.
 - **Warrior (hard):** hides the status panel and removes remaining HP and mana info from logs.
+- **God:** you control every character turn by turn.
+
+## Win Condition
+- If only one survivor remains, they win immediately.
+- Otherwise, after 10 rounds, the character with the highest HP wins (ties are possible).
 
 ## How to Play
 1. Open `index.html` in your browser.
-2. Enter your name and choose a class.
-3. Select your mode (Discovery or Warrior).
-4. Start the game and choose your actions when it is your turn.
+2. Build your party (2 to 5 characters).
+3. Select your mode (Discovery, Warrior, or God).
+4. Start the game and choose actions on each turn.
 
 ## Classes (stats and specials)
 - **Swordsman**: HP 12 | Mana 40 | Damage 4
