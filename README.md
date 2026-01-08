@@ -1,4 +1,4 @@
-# Battle en Royal des Srabs
+# Battle Royal des Srabs
 
 A small browser-based RPG battle game where 2 to 5 characters fight in a gladiator-style arena. You can build the whole party and play either a single character or all of them, depending on the mode.
 
