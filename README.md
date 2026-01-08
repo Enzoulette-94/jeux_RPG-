@@ -1,0 +1,58 @@
+# Battle en Royal des Srabs
+
+A small browser-based RPG battle game where 5 characters fight in a gladiator-style arena. You control one character; the rest are controlled by the computer.
+
+## Features
+- 7 playable classes with unique stats and special attacks.
+- 10-round battles or until only one survivor remains.
+- Normal attacks can fail (1 chance out of 4).
+- Special attacks consume mana.
+- Two game modes: discovery (easy) and warrior (hard).
+
+## Game Modes
+- **Discovery (easy):** shows the status panel each round.
+- **Warrior (hard):** hides the status panel and removes remaining HP and mana info from logs.
+
+## How to Play
+1. Open `index.html` in your browser.
+2. Enter your name and choose a class.
+3. Select your mode (Discovery or Warrior).
+4. Start the game and choose your actions when it is your turn.
+
+## Classes (stats and specials)
+- **Swordsman**: HP 12 | Mana 40 | Damage 4
+  - Special: Coup Vertical Fulgurant (5 damage, 20 mana, reduces next incoming damage by 2)
+- **Cavalier**: HP 16 | Mana 160 | Damage 3
+  - Special: Retraite de canasson (4 damage, 40 mana)
+- **Healer**: HP 8 | Mana 200 | Damage 2
+  - Special: Bandage (+8 HP, 25 mana)
+- **Berzerker**: HP 8 | Mana 0 | Damage 4
+  - Special: Rage (+3 damage, -2 HP, 2 mana)
+- **Assassin**: HP 6 | Mana 20 | Damage 6
+  - Special: Shadow hit (7 damage, 20 mana, -7 HP if the target survives)
+- **Lancier**: HP 10 | Mana 200 | Damage 2
+  - Special: Lance du tigre (7 damage, 25 mana)
+- **Archer**: HP 7 | Mana 300 | Damage 3
+  - Special: Fleche de feu (9 damage, 50 mana)
+
+## Project Structure
+```
+jeux_RPG/
+  index.html
+  index.js
+  README.md
+  js/
+    game.js
+    characters.js
+    swordsman.js
+    cavalier.js
+    soigneur.js
+    berzerker.js
+    assassin.js
+    lancier.js
+    archer.js
+```
+
+## Notes
+- This is a vanilla JavaScript project.
+- The UI is built with Tailwind via CDN.

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-image:
+          radial-gradient(70% 90% at 15% 20%, rgba(255, 140, 0, 0.28), transparent 60%),
+          radial-gradient(60% 80% at 85% 30%, rgba(255, 90, 0, 0.25), transparent 55%),
+          radial-gradient(80% 70% at 50% 90%, rgba(255, 170, 0, 0.3), transparent 65%),
+          linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 5, 5, 1));
+        background-attachment: fixed;
+      }
+    </style>
+  </head>
+  <body class="bg-zinc-950 text-white">
+    <main class="mx-auto max-w-3xl px-4 py-6">
+      <div class="mb-6 text-center">
+        <h1 class="text-5xl font-extrabold tracking-wide uppercase">
+          Battle royal des srabs
+        </h1>
+      </div>
+      <p class="mb-6 text-center text-base text-zinc-200">
+        Regles du jeu : tu controles un seul personnage, les autres sont geres
+        par l'ordinateur. La partie dure 10 rounds ou jusqu'a ce qu'il ne reste
+        plus qu'un survivant. Chaque tour, chaque personnage attaque une cible.
+        L'attaque normale peut echouer une fois sur deux, tandis que l'attaque
+        speciale consomme du mana. Le dernier vivant gagne.
+      </p>
+      <div id="app" class="mb-6 text-sm text-zinc-200"></div>
+
+      <section
+        id="setup"
+        class="mb-6 rounded-xl border border-red-900/60 bg-red-950/60 p-4 shadow-lg"
+      >
+        <h2 class="mb-3 text-lg font-semibold">Creer ton personnage</h2>
+        <form id="setup-form" class="flex flex-col gap-3">
+          <div class="flex flex-col gap-3 md:flex-row md:items-end">
+            <label class="flex flex-1 flex-col text-sm">
+              Nom du joueur
+              <input
+                id="player-name"
+                type="text"
+                class="mt-1 rounded-md border border-red-900/60 bg-zinc-900/80 px-3 py-2 text-white"
+                placeholder="Ton nom"
+                required
+              />
+            </label>
+            <label class="flex flex-1 flex-col text-sm">
+              Classe
+              <select
+                id="player-class"
+                class="mt-1 rounded-md border border-red-900/60 bg-zinc-900/80 px-3 py-2 text-white"
+                required
+              ></select>
+            </label>
+          </div>
+          <div class="rounded-lg border border-red-900/60 bg-zinc-900/40 p-3 text-sm">
+            <div class="mb-2 font-semibold">Choix du mode</div>
+            <label class="flex items-start gap-2">
+              <input
+                type="radio"
+                name="difficulty"
+                value="decouverte"
+                checked
+              />
+              <span>
+                Mode decouverte (facile) : l'etat des joueurs est visible a
+                chaque round.
+              </span>
+            </label>
+            <label class="mt-2 flex items-start gap-2">
+              <input type="radio" name="difficulty" value="guerrier" />
+              <span>
+                Mode guerrier (difficile) : l'etat des joueurs est cache.
+              </span>
+            </label>
+          </div>
+          <button
+            type="submit"
+            class="self-start rounded-md border border-red-900/60 bg-red-800/80 px-4 py-2 text-sm font-semibold text-white"
+          >
+            Lancer la partie
+          </button>
+        </form>
+        <div class="mt-4 text-sm text-zinc-200">
+          <p class="mb-2 font-semibold">Descriptions des classes :</p>
+          <ul class="space-y-3">
+            <li>
+              <div class="font-semibold">Epeiste</div>
+              <div class="text-xs text-zinc-300">
+                Classe equilibree, bon partout.
+              </div>
+              <div class="text-xs text-zinc-300">
+                Stats : HP 12 | Mana 40 | Degats 4
+              </div>
+              <div class="text-xs text-zinc-300">
+                Attaque speciale : Coup Vertical Fulgurant (5 degats, 20 mana,
+                -2 degats recus au prochain coup)
+              </div>
+            </li>
+            <li>
+              <div class="font-semibold">Cavalier</div>
+              <div class="text-xs text-zinc-300">
+                Solide et defensif.
+              </div>
+              <div class="text-xs text-zinc-300">
+                Stats : HP 16 | Mana 160 | Degats 3
+              </div>
+              <div class="text-xs text-zinc-300">
+                Attaque speciale : Retraite de canasson (4 degats, 40 mana)
+              </div>
+            </li>
+            <li>
+              <div class="font-semibold">Soigneur</div>
+              <div class="text-xs text-zinc-300">
+                Fragile mais soigne.
+              </div>
+              <div class="text-xs text-zinc-300">
+                Stats : HP 8 | Mana 200 | Degats 2
+              </div>
+              <div class="text-xs text-zinc-300">
+                Attaque speciale : Bandage (+8 PV, 25 mana)
+              </div>
+            </li>
+            <li>
+              <div class="font-semibold">Berzerker</div>
+              <div class="text-xs text-zinc-300">
+                Gros degats, peu de mana.
+              </div>
+              <div class="text-xs text-zinc-300">
+                Stats : HP 15 | Mana 4 | Degats 4
+              </div>
+              <div class="text-xs text-zinc-300">
+                Attaque speciale : Rage (+3 degats, -2 PV, 2 mana)
+              </div>
+            </li>
+            <li>
+              <div class="font-semibold">Assassin</div>
+              <div class="text-xs text-zinc-300">
+                Tres offensif.
+              </div>
+              <div class="text-xs text-zinc-300">
+                Stats : HP 6 | Mana 20 | Degats 6
+              </div>
+              <div class="text-xs text-zinc-300">
+                Attaque speciale : Shadow hit (7 degats, 20 mana, -7 PV si la
+                cible survit)
+              </div>
+            </li>
+            <li>
+              <div class="font-semibold">Lancier</div>
+              <div class="text-xs text-zinc-300">
+                Stable, bon mana.
+              </div>
+              <div class="text-xs text-zinc-300">
+                Stats : HP 10 | Mana 200 | Degats 2
+              </div>
+              <div class="text-xs text-zinc-300">
+                Attaque speciale : Lance du tigre (7 degats, 25 mana)
+              </div>
+            </li>
+            <li>
+              <div class="font-semibold">Archer</div>
+              <div class="text-xs text-zinc-300">
+                Distance, tres gros mana.
+              </div>
+              <div class="text-xs text-zinc-300">
+                Stats : HP 7 | Mana 300 | Degats 3
+              </div>
+              <div class="text-xs text-zinc-300">
+                Attaque speciale : Fleche de feu (9 degats, 50 mana)
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section
+        id="player-turn"
+        class="mb-6 hidden rounded-xl border border-red-900/60 bg-red-950/60 p-4 shadow-lg"
+        hidden
+      >
+        <div class="mb-3 text-sm">
+          Tour de <span id="player-turn-name" class="font-semibold"></span>
+        </div>
+        <div class="flex flex-col gap-3 md:flex-row md:items-end">
+          <label class="flex flex-1 flex-col text-sm">
+            Cible
+            <select
+              id="target-select"
+              class="mt-1 rounded-md border border-red-900/60 bg-zinc-900/80 px-3 py-2 text-white"
+            ></select>
+          </label>
+          <button
+            id="btn-normal"
+            type="button"
+            class="rounded-md border border-red-900/60 bg-red-800/80 px-4 py-2 text-sm font-semibold text-white"
+          >
+            Attaque normale
+          </button>
+          <button
+            id="btn-special"
+            type="button"
+            class="rounded-md border border-red-900/60 bg-red-700/80 px-4 py-2 text-sm font-semibold text-white"
+          >
+            Attaque speciale
+          </button>
+        </div>
+        <div id="special-info" class="mt-2 text-xs text-zinc-300"></div>
+      </section>
+
+      <section
+        id="log-section"
+        class="hidden rounded-xl border border-red-900/60 bg-red-950/60 p-4 shadow-lg"
+        hidden
+      >
+        <div id="log" class="flex flex-col gap-1 text-sm"></div>
+        <button
+          id="replay"
+          type="button"
+          class="mt-4 hidden rounded-md border border-red-900/60 bg-red-800/80 px-4 py-2 text-sm font-semibold text-white"
+          hidden
+        >
+          Rejouer
+        </button>
+      </section>
+    </main>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
