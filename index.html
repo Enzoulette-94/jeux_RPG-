@@ -35,27 +35,34 @@
         id="setup"
         class="mb-6 rounded-xl border border-red-900/60 bg-red-950/60 p-4 shadow-lg"
       >
-        <h2 class="mb-3 text-lg font-semibold">Creer ton personnage</h2>
+        <h2 class="mb-3 text-lg font-semibold">Creer ton equipe</h2>
         <form id="setup-form" class="flex flex-col gap-3">
-          <div class="flex flex-col gap-3 md:flex-row md:items-end">
-            <label class="flex flex-1 flex-col text-sm">
-              Nom du joueur
-              <input
-                id="player-name"
-                type="text"
-                class="mt-1 rounded-md border border-red-900/60 bg-zinc-900/80 px-3 py-2 text-white"
-                placeholder="Ton nom"
-                required
-              />
-            </label>
-            <label class="flex flex-1 flex-col text-sm">
-              Classe
-              <select
-                id="player-class"
-                class="mt-1 rounded-md border border-red-900/60 bg-zinc-900/80 px-3 py-2 text-white"
-                required
-              ></select>
-            </label>
+          <p class="text-sm text-zinc-200">
+            Ajoute ou retire des personnages avant de lancer la partie. Le
+            premier personnage sera celui que tu controles.
+          </p>
+          <div id="party-list" class="flex flex-col gap-3"></div>
+          <div class="flex flex-wrap gap-3">
+            <button
+              id="add-character"
+              type="button"
+              class="rounded-md border border-red-900/60 bg-red-900/60 px-4 py-2 text-sm font-semibold text-white"
+            >
+              Ajouter un personnage
+            </button>
+            <button
+              id="auto-character"
+              type="button"
+              class="rounded-md border border-red-900/60 bg-red-700/70 px-4 py-2 text-sm font-semibold text-white"
+            >
+              Creation auto perso
+            </button>
+            <button
+              type="submit"
+              class="rounded-md border border-red-900/60 bg-red-800/80 px-4 py-2 text-sm font-semibold text-white"
+            >
+              Lancer la partie
+            </button>
           </div>
           <div class="rounded-lg border border-red-900/60 bg-zinc-900/40 p-3 text-sm">
             <div class="mb-2 font-semibold">Choix du mode</div>
@@ -77,13 +84,13 @@
                 Mode guerrier (difficile) : l'etat des joueurs est cache.
               </span>
             </label>
+            <label class="mt-2 flex items-start gap-2">
+              <input type="radio" name="difficulty" value="god" />
+              <span>
+                Mode god : tu controles tous les personnages, un par un.
+              </span>
+            </label>
           </div>
-          <button
-            type="submit"
-            class="self-start rounded-md border border-red-900/60 bg-red-800/80 px-4 py-2 text-sm font-semibold text-white"
-          >
-            Lancer la partie
-          </button>
         </form>
         <div class="mt-4 text-sm text-zinc-200">
           <p class="mb-2 font-semibold">Descriptions des classes :</p>

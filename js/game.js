@@ -161,6 +161,11 @@ export class Game {
       return;
     }
 
+    if (this.ui?.difficulty === "god") {
+      await this.takeHumanTurn(attacker);
+      return;
+    }
+
     if (attacker === this.humanPlayer) {
       await this.takeHumanTurn(attacker);
       return;
@@ -407,10 +412,31 @@ export class Game {
     }
 
     const survivors = this.alivePlayers();
-    survivors.forEach((p) => {
+    if (survivors.length === 0) {
+      this.logLine("Partie terminee. Aucun survivant.");
+      if (this.ui?.replayButton) {
+        this.ui.replayButton.hidden = false;
+        this.ui.replayButton.classList.remove("hidden");
+      }
+      return;
+    }
+
+    const maxHp = Math.max(...survivors.map((p) => p.hp));
+    const winners = survivors.filter((p) => p.hp === maxHp);
+    winners.forEach((p) => {
       p.status = "winner";
     });
-    this.logLine("Partie terminee. Les survivants gagnent.");
+
+    if (winners.length === 1) {
+      this.logWinner(winners[0]);
+    } else {
+      this.logTie(winners);
+    }
+
+    if (winners.includes(this.humanPlayer)) {
+      this.logHumanVictory();
+    }
+
     if (this.ui?.replayButton) {
       this.ui.replayButton.hidden = false;
       this.ui.replayButton.classList.remove("hidden");
@@ -426,6 +452,19 @@ export class Game {
     line.className =
       "mx-auto my-4 w-fit rounded-lg border border-emerald-700/80 bg-emerald-800/20 px-5 py-2 text-3xl font-extrabold text-emerald-300";
     line.textContent = `VICTOIRE : ${this.playerLabelText(winner)}`;
+    logContainer.appendChild(line);
+  }
+
+  logTie(winners) {
+    const logContainer = document.getElementById("log");
+    if (!logContainer) {
+      return;
+    }
+    const line = document.createElement("div");
+    line.className =
+      "mx-auto my-4 w-fit rounded-lg border border-amber-700/80 bg-amber-900/30 px-5 py-2 text-xl font-bold text-amber-200";
+    const names = winners.map((p) => this.playerLabelText(p)).join(", ");
+    line.textContent = `Bravo au survivant : ${names}`;
     logContainer.appendChild(line);
   }
 
@@ -474,7 +513,9 @@ export class Game {
       if (!player.isAlive()) {
         continue;
       }
-      if (player === this.humanPlayer) {
+      if (this.ui?.difficulty === "god") {
+        this.logLineParts(["C'est au tour de ", player, " de jouer."]);
+      } else if (player === this.humanPlayer) {
         this.logLineParts(["C'est a ton tour de jouer."]);
       }
       await this.takeTurn(player);
