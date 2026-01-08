@@ -31,7 +31,7 @@ A small browser-based RPG battle game where 2 to 5 characters fight in a gladiat
 - **Cavalier**: HP 16 | Mana 160 | Damage 3
   - Special: Retraite de canasson (4 damage, 40 mana)
 - **Healer**: HP 8 | Mana 200 | Damage 2
-  - Special: Bandage (+8 HP, 25 mana)
+  - Special: Bandage (+4 HP, 75 mana)
 - **Berzerker**: HP 8 | Mana 0 | Damage 4
   - Special: Rage (+3 damage, -2 HP, 2 mana)
 - **Assassin**: HP 6 | Mana 20 | Damage 6

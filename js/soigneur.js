@@ -4,7 +4,7 @@ export class Soigneur extends Character {
   constructor(name) {
     super(name, 8, 2, 200);
     this.specialName = "Bandage";
-    this.specialCost = 25;
+    this.specialCost = 75;
     this.specialDamage = 0;
   }
 
@@ -12,7 +12,7 @@ export class Soigneur extends Character {
     if (!this.spendMana(this.specialCost)) {
       return false;
     }
-    this.hp += 8;
+    this.hp += 4;
     return true;
   }
 }
